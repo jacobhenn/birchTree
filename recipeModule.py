@@ -24,7 +24,8 @@ def ingredients(itemName):
 
     # Find which of four variations the file is formatted in
     recipeType = jsonParsed['type'].replace('minecraft:crafting_', '')
-    keyVersion = itemLabel(jsonParsed)
+    if recipeType == 'shapeless':
+        keyVersion = itemLabel(jsonParsed)
 
     # If the format is one of the shapeless variety, form a material list
     if recipeType == 'shapeless':
@@ -36,6 +37,17 @@ def ingredients(itemName):
 
         for value in uniqueElementsIn(rawIngredients):
             numberedIngredients.append([rawIngredients.count(value), value.replace('minecraft:', '')])
+
+        return(numberedIngredients)
+
+    # If the format is one of the shaped variety, form a material list
+    elif recipeType == 'shaped':
+        numberedIngredients = []
+        pattern = list(''.join(jsonParsed['pattern']))
+
+        # For all the keys in the pattern
+        for value in uniqueElementsIn(pattern):
+            numberedIngredients.append([pattern.count(value), value])
 
         return(numberedIngredients)
 
