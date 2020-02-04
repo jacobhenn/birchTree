@@ -19,6 +19,7 @@ def takeInput():
 # pr <itemName>:
 #   print the ingredients used to craft <itemName>.
 def pr():
+    print(recipeModule.ingredients(inputList[1]))
     print(recipeModule.formatRecipe(recipeModule.ingredients(inputList[1])))
 
 
@@ -38,14 +39,14 @@ def xws():
 # new <branchName>:
 #   create a new branch on the project tree called <projectName>
 def new():
-    doAtLevel(inputList[2].split('/'), update('{' + inputList[1] + ' : {}}'))
+    tree['birchTree'].update({inputList[1] : {}}) 
 
 
 # rm <branchName>:
 #   remove the branch named <branchName>
 def rm():
     try:
-        exec('del(' + getLevel() + '[inputList[1]])')
+        del(tree['birchTree'][inputList[1]])
     except:
         print('E2: Not a valid branch name')
 

@@ -49,6 +49,11 @@ def ingredients(itemName):
         for value in uniqueElementsIn(pattern):
             numberedIngredients.append([pattern.count(value), value])
 
+        keyList = list(jsonParsed['key'].keys())
+        for key in keyList: 
+            for item in numberedIngredients:
+                if item[1] == key:
+                    item[1] = jsonParsed['key'][key]['item'].split(':')[1]
         return(numberedIngredients)
 
 def formatRecipe(rawRecipe):
