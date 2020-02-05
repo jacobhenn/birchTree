@@ -17,8 +17,7 @@ def ingredients(itemName):
         jsonRaw = open(fileName, 'r').read()
     except:
         jsonRaw = ''
-        print('E1: Not a valid item name')
-        return
+        return('E1')
 
     jsonParsed = json.loads(jsonRaw)
 

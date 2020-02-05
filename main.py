@@ -1,4 +1,5 @@
 import json
+import yaml
 import recipeModule
 
 tree = json.loads(open('C:/Users/windo/Desktop/Stuff/Projects/Minecraft/birchTree/tree.txt', 'r').read().replace('\'', '\"'))
@@ -60,31 +61,40 @@ def pt():
 # rq <itemNumber> <itemName> <branchName>:
 #   specify that the project <branchName> requires <itemNumber> of <itemName>
 def rq():
-    recipe = getRecipe(inputList[1])
+    # Initiate all of the arg names for easy reading
+    args_itemNumber = inputList[1]
+    args_itemName = inputList[2]
+    args_branchName = inputList[3]
 
-    for item in recipe:
-        item = item.split(' ')
-        print(item)
-        item[0] = int(item[0])
-        print(item)
-        item[0] = str(item[0] * inputList[2])
-        print(item)
-        ' '.join(item)
-        print(item)
+    # Fetch the ingredients of <itemName>
+    ingredientList = recipeModule.ingredients(args_itemName)
 
-    exec(getLevel() + '.update({inputList[1] : ' + str(recipe) + '})')
+    # Handle E1
+    if ingredientList == 'E1':
+        print('E1: Not a valid item name')
+        takeInput()
+
+    # Multiply the ingredients list by <itemNumber>
+    ingredientList = [[item[0] * int(args_itemNumber), item[1]] for item in ingredientList]
+    
+    # Establish a variable '<itemNumber> <itemName>'
+    number_name = ' '.join([args_itemNumber, args_itemName])
+
+    # Add a key-val pair of <branchName> : ingredientList
+    try:
+        tree['birchTree'][args_branchName].update({number_name : ingredientList})
+    except:
+        print('E2: Not a valid branch name')
+        takeInput()
 
 
 # lr <branchName>:
 #   print all the requirements in <branchName>
 def lr():
-    print(getLevel())
-    testVar = 'test'
-    exec('%s = %d' % (testVar, getLevel())) 
-    print(testVar)
+    # Initiate the arg name for easy reading
+    args_branchName = inputList[1]
 
-    for item in exec(getLevel()):
-        print('\n'.join(item))
+    # requirementsList = 
 
 
 # run <command>
